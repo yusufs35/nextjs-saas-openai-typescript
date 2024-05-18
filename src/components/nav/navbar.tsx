@@ -5,7 +5,7 @@ import React from "react";
 import { BiPen, BiCoin, BiLogOut } from "react-icons/bi";
 
 const Navbar = async () => {
-	const { user } = await getSession();
+	const { user } = (await getSession()) || {};
 
 	return (
 		<nav className="w-full bg-white shadow-md px-6 py-2 z-20 grid grid-cols-3">
@@ -44,7 +44,8 @@ const Navbar = async () => {
 						className="rounded-full"
 					/>
 					<span className="font-semibold text-gray-600">
-						Hi, <span className="hidden md:inline">{user?.name}</span>
+						Hi,{" "}
+						<span className="hidden md:inline">{user?.name}</span>
 					</span>
 					<Link
 						href="/api/auth/logout"
