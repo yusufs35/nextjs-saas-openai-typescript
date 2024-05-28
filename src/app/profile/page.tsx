@@ -1,17 +1,14 @@
+import AmountOfCredit from "@/components/profile/amount-of-credit";
+import BuyMoreCreditButton from "@/components/profile/buy-more-credit-button";
 import React from "react";
-import { headers } from "next/headers";
 
-
-
-const UserPage = () => {
-	const headersList = headers();
-
-	console.log("host", headersList.get("host"));
-	console.log("next-url", headersList.get("next-url"));
-	console.log("referer", headersList.get("referer"));
-
-
-	return <div>Page</div>;
+const ProfilePage = () => {
+	return (
+		<div className="text-center">
+			<AmountOfCredit/>
+			<BuyMoreCreditButton/>
+		</div>
+	);
 };
 
-export default UserPage;
+export default ProfilePage;
