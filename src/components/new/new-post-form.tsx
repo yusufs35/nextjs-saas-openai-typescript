@@ -1,11 +1,13 @@
 "use client";
 import { tones } from "@/data/tones";
+import { generatePost } from "@/lib/functions";
 import React, { useState } from "react";
 
 let handleChangeType : HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
 
 const NewPostForm = () => {
+	const [post, setPost] = useState<Post | null>(null)
 	const [postPrompt, setPostPrompt] = useState<PostPrompt>({
 		title: "",
 		description: "",
@@ -21,9 +23,11 @@ const NewPostForm = () => {
 		setPostPrompt({ ...postPrompt, [name]: value });
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-        console.log(postPrompt)
+        const res = await generatePost(postPrompt);
+		const data = await res.json();
+		setPost(data);
 	};
 
 	return (
