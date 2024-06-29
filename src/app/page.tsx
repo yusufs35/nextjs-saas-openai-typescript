@@ -1,7 +1,10 @@
-import { getSession } from "@auth0/nextjs-auth0";
+import { auth } from "@/auth";
+import LoginButton from "@/components/common/login-button";
+import { Session, User } from "next-auth";
 
 export default async function Home() {
-	const { user } = (await getSession()) || {};
+	const session: Session | null = await auth();
+	const user: User | undefined = session?.user;
 
 	return (
 		<section className="w-full flex flex-col">
@@ -30,12 +33,7 @@ export default async function Home() {
 						Welcome to Bloggify, where you can easly create full
 						blog posts with just one click!
 					</h2>
-					<a
-						href="/api/auth/login"
-						className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-500 transition-all"
-					>
-						Login to get started
-					</a>
+					<LoginButton/>
 				</div>
 			)}
 		</section>

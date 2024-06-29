@@ -9,7 +9,7 @@ const LogoutBtn = () => {
 
 	const handleLogout = async () => {
 		const res = await swConfirm("Are you sure to logout", "question");
-		if (res.isConfirmed) router.replace("/api/auth/logout");
+		if (res.isConfirmed) router.replace("/api/auth/signout");
 	};
 
 	return (

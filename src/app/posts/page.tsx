@@ -1,12 +1,11 @@
 
-import { getPosts } from "@/lib/functions";
+import { getPosts } from "@/actions/post-action";
 import React from "react";
 
 const PostPage = async () => {
-	const res = await getPosts();
-	const data = await res.json();
+	const posts = await getPosts();
 
-	console.log(data)
+	console.log(posts)
 
 	return <>Hellox</>;
 };

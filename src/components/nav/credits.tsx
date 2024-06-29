@@ -1,11 +1,14 @@
-import { getSession } from "@auth0/nextjs-auth0";
 import Link from "next/link";
 import React from "react";
 import { BiCoin } from "react-icons/bi";
 import Credit from "../common/credit";
+import { auth } from "@/auth";
+import { Session, User } from "next-auth";
 
 const Credits = async () => {
-	const { user } = (await getSession()) || {};
+	const session: Session | null = await auth();
+	const user: User | undefined = session?.user;
+
 	return (
 		<>
 			{user ? (

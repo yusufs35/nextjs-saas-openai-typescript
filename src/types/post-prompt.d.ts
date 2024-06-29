@@ -1,5 +1,5 @@
 interface PostPrompt {
-	title: string;
+	title: string | null;
 	description: string;
 	keywords: string;
 	tone: string;

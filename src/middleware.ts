@@ -1,12 +1,9 @@
-import { withMiddlewareAuthRequired } from "@auth0/nextjs-auth0/edge";
-
-export default withMiddlewareAuthRequired();
+export { auth as middleware } from "@/auth"
 
 export const config = {
 	matcher: [
 		"/new/:path*",
 		"/posts/:path*",
 		"/profile/:path*",
-		
 	],
 };

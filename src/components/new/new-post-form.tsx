@@ -1,6 +1,6 @@
 "use client";
+import { generatePost } from "@/actions/post-action";
 import { tones } from "@/data/tones";
-import { generatePost } from "@/lib/functions";
 import React, { useState } from "react";
 import { FaRegTired, FaSpinner } from "react-icons/fa";
 
@@ -34,11 +34,9 @@ const NewPostForm = () => {
 		setSuccess(false);
 
 		try {
-			const res = await generatePost(postPrompt);
-			const data = await res.json();
+			const data = await generatePost(postPrompt);
 			setPost(data);
 			setSuccess(true);
-
 		} catch (err) {
 			setError(true);
 		} finally {

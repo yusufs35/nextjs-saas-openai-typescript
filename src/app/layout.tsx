@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
 import Navbar from "@/components/nav/navbar";
 import Sidebar from "@/components/nav/sidebar";
-import { RecoilRoot } from "recoil";
 import RecoilContext from "@/atoms";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,22 +21,20 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<html lang="en">
-			<UserProvider>
-				<RecoilContext>
-					<body
-						suppressHydrationWarning={true}
-						className={`${inter.className} bg-gray-50 h-screen overflow-clip flex flex-col`}
-					>
-						<Navbar />
-						<main className="w-full h-full flex flex-col md:flex-row">
-							<Sidebar />
-							<div className="w-full md:pr-32 overflow-y-auto">
-								{children}
-							</div>
-						</main>
-					</body>
-				</RecoilContext>
-			</UserProvider>
+			<RecoilContext>
+				<body
+					suppressHydrationWarning={true}
+					className={`${inter.className} bg-gray-50 h-screen overflow-clip flex flex-col`}
+				>
+					<Navbar />
+					<main className="w-full h-full flex flex-col md:flex-row">
+						<Sidebar />
+						<div className="w-full md:pr-32 overflow-y-auto">
+							{children}
+						</div>
+					</main>
+				</body>
+			</RecoilContext>
 		</html>
 	);
 }

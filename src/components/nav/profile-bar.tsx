@@ -1,18 +1,20 @@
-import { getSession } from "@auth0/nextjs-auth0";
 import Image from "next/image";
 import React from "react";
 import LogoutBtn from "./logout-btn";
+import { auth } from "@/auth";
+import { Session, User } from "next-auth";
 
 const ProfileBar = async () => {
-	const { user } = (await getSession()) || {};
+	const session: Session | null = await auth();
+	const user: User | undefined = session?.user;
 
 	return (
 		<>
 			{user ? (
 				<div className="flex flex-row justify-end items-center gap-2">
 					<Image
-						src={user?.picture || ""}
-						alt={user?.name}
+						src={user?.image || ""}
+						alt={user?.name || "User profile"}
 						width={24}
 						height={24}
 						className="rounded-full"
