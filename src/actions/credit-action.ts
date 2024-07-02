@@ -2,7 +2,6 @@
 
 import { auth } from "@/auth";
 import { connectToDB } from "@/lib/mongo";
-import { Document, WithId } from "mongodb";
 import { Session, User } from "next-auth";
 
 export const addCredits = async () => {
