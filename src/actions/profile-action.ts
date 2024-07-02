@@ -2,8 +2,10 @@
 
 import { auth } from "@/auth";
 import { connectToDB } from "@/lib/mongo";
-import { Document, WithId } from "mongodb";
+import { createProfile, getProfileById } from "@/lib/mongo/profile";
 import { Session, User } from "next-auth";
+
+
 
 export const getProfile = async () => {
 	const { db } = await connectToDB();
@@ -13,20 +15,14 @@ export const getProfile = async () => {
 
 	if (!user) throw new Error("User is not authenticated");
 
-	let profile: WithId<Document> | Object | null = await db
-		.collection("profiles")
-		.findOne({
-			uid: user?.id,
-		});
-
-        console.log(profile)
+	let profile: ProfileReturnType = await getProfileById(db, user.id);
 
 	if (!profile) {
 		profile = {
 			uid: user.id,
 			credits: 0,
 		};
-		await db.collection("profiles").insertOne(profile);
+		await createProfile(db, profile);
 	}
 
 	return JSON.stringify(profile);

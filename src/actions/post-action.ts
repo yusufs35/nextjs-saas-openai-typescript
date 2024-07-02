@@ -8,6 +8,8 @@ import { getCreateTitlePrompt } from "@/lib/prompts/title";
 import { getCreatePostPrompt } from "@/lib/prompts/post";
 import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
+import { deletePostById, getPostsByUserId, insertPost } from "@/lib/mongo/post";
+import { updateCredit, getProfileById } from "@/lib/mongo/profile";
 
 export const getPosts = async () => {
 	const { db } = await connectToDB();
@@ -17,12 +19,7 @@ export const getPosts = async () => {
 
 	if (!user) throw new Error("User is not authenticated");
 
-	const posts = await db
-		.collection("posts")
-		.find({
-			uid: user?.id,
-		})
-		.toArray();
+	const posts = getPostsByUserId(db, user.id);
 
 	return posts;
 };
@@ -34,6 +31,10 @@ export const generatePost = async (postPrompt: PostPrompt) => {
 	const user: User | undefined = session?.user;
 
 	if (!user) throw new Error("User is not authenticated");
+
+	const profile = await getProfileById(db, user.id);
+
+	if (!profile || profile.credits < 1) throw new Error("Not enough credits");
 
 	const openAI = new OpenAI({
 		apiKey: process.env.OPEN_AI_KEY,
@@ -63,7 +64,9 @@ export const generatePost = async (postPrompt: PostPrompt) => {
 		uid: user?.id,
 	};
 
-	await db.collection("posts").insertOne(post);
+	await insertPost(db, post);
+
+	await updateCredit(db, user.id, -1);
 
 	return post;
 };
@@ -74,7 +77,7 @@ export const deletePost = async (id: string) => {
 	const user: User | undefined = session?.user;
 
 	if (!user) throw new Error("User is not authenticated");
-	await db.collection("posts").deleteOne({ _id: new ObjectId(id) });
+	await deletePostById(db, id);
 
-	revalidatePath("/posts")
+	revalidatePath("/posts");
 };

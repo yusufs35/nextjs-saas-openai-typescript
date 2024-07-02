@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/nav/navbar";
 import Sidebar from "@/components/nav/sidebar";
 import RecoilContext from "@/atoms";
+import StateInitializer from "@/components/common/state-initializer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +34,7 @@ export default function RootLayout({
 							{children}
 						</div>
 					</main>
+					<StateInitializer />
 				</body>
 			</RecoilContext>
 		</html>

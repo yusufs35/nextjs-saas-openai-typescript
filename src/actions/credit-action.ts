@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import { connectToDB } from "@/lib/mongo";
+import { updateCredit } from "@/lib/mongo/profile";
 import { Session, User } from "next-auth";
 
 export const addCredits = async () => {
@@ -12,12 +13,9 @@ export const addCredits = async () => {
 
 	if (!user) throw new Error("User is not authenticated");
 
-	await db.collection("profiles").updateOne(
-		{ uid: user.id },
-		{
-			$inc: {
-				credits: 10,
-			},
-		}
-	);
+	const addedCredit: number = 10;
+
+	const result = updateCredit(db, user.id, addedCredit);
+
+	return JSON.stringify(result);
 };
