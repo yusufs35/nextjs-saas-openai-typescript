@@ -1,18 +1,10 @@
 "use client";
 import { addCredits } from "@/actions/credit-action";
-import { profileAtom } from "@/atoms/profile-atom";
 import React from "react";
-import { useRecoilState } from "recoil";
 
 const BuyMoreCreditButton = () => {
-	const [profile, setProfile] = useRecoilState(profileAtom);
 	const addCredit = async () => {
-		const updatedProfile = JSON.parse(await addCredits());
-
-		setProfile((profile) => ({
-			...profile,
-			credits: updatedProfile?.credits || 0,
-		}));
+		await addCredits();
 	};
 	return (
 		<button

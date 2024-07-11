@@ -7,13 +7,10 @@ export const metadata: Metadata = {
 
 const Layout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
 	return (
-		<section className="w-100 flex flex-col items-center pt-4">
-			<section className="w-[95%] max-w-4xl">
-				<PageTitle title="Generate a new post" />
-
-				{children}
-			</section>
-		</section>
+		<>
+			<PageTitle title="Generate a new post" />
+			{children}
+		</>
 	);
 };
 

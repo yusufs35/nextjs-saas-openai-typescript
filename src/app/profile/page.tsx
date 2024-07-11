@@ -4,10 +4,10 @@ import React from "react";
 
 const ProfilePage = () => {
 	return (
-		<div className="text-center">
+		<>
 			<AmountOfCredit/>
 			<BuyMoreCreditButton/>
-		</div>
+		</>
 	);
 };
 

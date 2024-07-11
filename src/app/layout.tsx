@@ -31,7 +31,11 @@ export default function RootLayout({
 					<main className="w-full h-full flex flex-col md:flex-row">
 						<Sidebar />
 						<div className="w-full md:pr-32 overflow-y-auto">
-							{children}
+							<section className="w-full flex flex-col items-center pt-4">
+								<div className="w-[95%] max-w-4xl flex flex-col items-center gap-4">
+									{children}
+								</div>
+							</section>
 						</div>
 					</main>
 					<StateInitializer />
